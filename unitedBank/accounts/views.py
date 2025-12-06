@@ -1,3 +1,68 @@
-from django.shortcuts import render
-
+from django.shortcuts import HttpResponseRedirect
+from django.contrib import messages
+from django.contrib.auth import get_user_model, login, logout
+from django.contrib.auth.views import LoginView
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView, RedirectView
+from .forms import UserRegistrationForm, UserAddressForm
 # Create your views here.
+
+User = get_user_model()
+
+class UserRegistrationView(TemplateView):
+    model = User
+    form_class = UserRegistrationForm
+    template_name = ''
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return HttpResponseRedirect(reverse_lazy(''))
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        registration_form = UserRegistrationForm(self.request.POST)
+        address_form = UserAddressForm(self.request.POST)
+        if registration_form.is_valid() and address_form.is_valid():
+            user = registration_form.save()
+            address = address_form.save()
+            login(self.request, user)
+            messages.success(
+                self.request, 
+                (
+                    f'Thanks for creating account in our bank.'
+                    f'Your Account No is {user.account.account_no}'
+                )
+            )
+            return HttpResponseRedirect(
+                reverse_lazy('')
+            )
+        
+        return self.render_to_response(          ## user ka form gulo show korano
+            self.get_context_data(
+                registration_form=registration_form,
+                address_form=address_form
+            )
+        )
+    
+    
+    def get_context_data(self, **kwargs):    ## jodi kwargs blank thaka mana form gulo user ar kasha show korba na. ai ta jano na hoi tai ai kaj ta kora.
+        if 'registration_form' not in kwargs:
+            kwargs['registration_form'] = UserRegistrationForm()
+        if 'address_form' not in kwargs:
+            kwargs['address_form'] = UserAddressForm()
+            
+        return super().get_context_data(**kwargs)
+
+
+class UserLoginView(LoginView):
+    template_name = ''
+    redirect_authenticated_user = False
+
+
+class LogoutView(RedirectView):
+    pattern_name = ''
+    
+    def get_redirect_url(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            logout(self.request)
+        return super().get_redirect_url(*args, **kwargs)
+
