@@ -1,0 +1,1 @@
+I am building a banking system where the frontend will be developed using HTML and Bootstrap, and the backend will be built with Django. Users will be able to create accounts, check their balance, perform transactions, apply for loans, and register as new users.
