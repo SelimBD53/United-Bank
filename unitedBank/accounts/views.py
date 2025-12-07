@@ -12,10 +12,11 @@ User = get_user_model()
 class UserRegistrationView(TemplateView):
     model = User
     form_class = UserRegistrationForm
-    template_name = ''
+    template_name = 'accounts/user_registration.html'
+    
     def dispatch(self, request, *args, **kwargs):
         if self.request.user.is_authenticated:
-            return HttpResponseRedirect(reverse_lazy(''))
+            return HttpResponseRedirect(reverse_lazy('transactions:transaction_report'))
         return super().dispatch(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
@@ -33,7 +34,7 @@ class UserRegistrationView(TemplateView):
                 )
             )
             return HttpResponseRedirect(
-                reverse_lazy('')
+                reverse_lazy('transactions:deposit_money')
             )
         
         return self.render_to_response(          ## user ka form gulo show korano
@@ -54,12 +55,12 @@ class UserRegistrationView(TemplateView):
 
 
 class UserLoginView(LoginView):
-    template_name = ''
+    template_name = 'accounts/user_login.html'
     redirect_authenticated_user = False
 
 
 class LogoutView(RedirectView):
-    pattern_name = ''
+    pattern_name = 'home'
     
     def get_redirect_url(self, *args, **kwargs):
         if self.request.user.is_authenticated:

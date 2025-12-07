@@ -38,8 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
-    'transactions',
     'core',
+    'transactions',
 ]
 
 MIDDLEWARE = [
@@ -57,7 +57,7 @@ ROOT_URLCONF = 'unitedBank.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -122,5 +122,11 @@ STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+
+
+ACCOUNT_NUMBER_START_FROM = 1000000000
+MINIMUM_DEPOSIT_AMOUNT = 10
+MINIMUM_WITHDRAWAL_AMOUNT = 10
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
