@@ -41,9 +41,12 @@ class WithdrawForm(TransactionForm):
     def clean_amount(self):
         account = self.account
         min_withdraw_amount = 100
-        max_withdraw_amount = (
-            account.account_type.maximum_withdrawal_amount
-        )
+        # Set maximum withdrawal amount based on account type
+        if account.account_type == 'Savings':
+            max_withdraw_amount = 5000
+        else:  # Current account
+            max_withdraw_amount = 10000
+            
         balance = account.balance
         amount = self.cleaned_data.get('amount')
         if amount < min_withdraw_amount:

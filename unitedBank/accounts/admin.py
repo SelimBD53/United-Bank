@@ -1,9 +1,27 @@
+
 from django.contrib import admin
-
+from .models import UserBankAccount, UserAddress
 # Register your models here.
-from models import User, UserBankAccount, UserAddress, BankAccountType
 
-admin.site.register(User)
 admin.site.register(UserBankAccount)
 admin.site.register(UserAddress)
-admin.site.register(BankAccountType)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Username (leave blank to use 'hp'): bank
+# Email address: bank@gmail.com
+# Password: 12345
+# Password (again): 12345

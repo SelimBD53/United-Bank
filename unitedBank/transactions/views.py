@@ -89,13 +89,13 @@ class DepositMoneyView(TransactionCreateMixin):
         amount = form.cleaned_data.get('amount')
         account = self.request.user.account
         # print(self.request.user)
-        if not account.initial_deposit_date:
+        if not account.initial_deposite_date:
             now = timezone.now()
-            account.initial_deposit_date = now
+            account.initial_deposite_date = now
         account.balance += amount
         account.save(
             update_fields=[
-                'initial_deposit_date',
+                'initial_deposite_date',
                 'balance'
             ]
         )

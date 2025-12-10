@@ -1,8 +1,8 @@
-MALE = 'M'
-FEMALE = 'F'
-
-GENDER_CHOICE = (
-    (MALE, "Male"),
-    (FEMALE, "Female"),
+ACCOUNT_TYPE = (
+    ('Savings', 'Savings'),
+    ('Current', 'Current'),
 )
-    
+GENDER_TYPE = (
+    ('Male', 'Male'),
+    ('Female', 'Female'),
+)
